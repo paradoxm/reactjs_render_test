@@ -1,4 +1,5 @@
 import React, { FunctionComponent, LegacyRef, memo } from 'react';
+import isEqual from 'react-fast-compare';
 
 import { useRenderBlink } from '../../hooks/useRenderBlink/useRenderBlink';
 import { Cell } from '../Cell/Cell';
@@ -7,7 +8,7 @@ import { Item } from '../helpers';
 export interface RowProps {
   item: Item;
   columns: string[];
-  onChange?: () => {};
+  onChange?: () => void;
 }
 
 const RowRaw: FunctionComponent<RowProps> = ({
@@ -26,4 +27,6 @@ const RowRaw: FunctionComponent<RowProps> = ({
   );
 };
 
-export const Row = memo(RowRaw);
+export const Row = memo(RowRaw, isEqual);
+
+(Row as any).whyDidYouRender = true;

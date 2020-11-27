@@ -7,29 +7,29 @@ import { Item } from '../helpers';
 import { Row } from '../Row/Row';
 
 export interface GridProps {
+  num: number;
   items: Item[];
   columns: string[];
-  onChange: () => void;
+  onChange?: () => void;
 }
 
 const GridRaw: FunctionComponent<GridProps> = ({
+  num,
   items,
   columns,
   onChange = () => {},
 }): JSX.Element => {
-  const ref = useRenderBlink('#3b9ae7', 400);
+  const ref = useRenderBlink('', 0);
 
   return (
     <div ref={ref as LegacyRef<HTMLDivElement>} className="grid">
       <Header columns={columns} />
 
       {items.map((item) => (
-        <Row key={item.id} item={item} columns={columns} />
+        <Row key={item.id} item={item} columns={columns} onChange={onChange} />
       ))}
     </div>
   );
 };
 
 export const Grid = memo(GridRaw, isEqual);
-
-(Grid as any).whyDidYouRender = true;
