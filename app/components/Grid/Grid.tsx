@@ -7,14 +7,12 @@ import { Item } from '../helpers';
 import { Row } from '../Row/Row';
 
 export interface GridProps {
-  num: number;
   items: Item[];
   columns: string[];
   onChange?: () => void;
 }
 
 const GridRaw: FunctionComponent<GridProps> = ({
-  num,
   items,
   columns,
   onChange = () => {},
