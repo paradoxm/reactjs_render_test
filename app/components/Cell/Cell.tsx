@@ -1,4 +1,4 @@
-import React, { FunctionComponent, LegacyRef } from 'react';
+import React, { FunctionComponent, LegacyRef, memo } from 'react';
 
 import { useRenderBlink } from '../../hooks/useRenderBlink/useRenderBlink';
 import { Item } from '../helpers';
@@ -8,8 +8,8 @@ export interface CellProps {
   column: string;
 }
 
-export const Cell: FunctionComponent<CellProps> = ({ item, column }): JSX.Element => {
-  const ref = useRenderBlink();
+const CellRaw: FunctionComponent<CellProps> = ({ item, column }): JSX.Element => {
+  const ref = useRenderBlink('#dd6565', 250);
 
   return (
     <div ref={ref as LegacyRef<HTMLDivElement>} className="grid-cell">
@@ -17,3 +17,5 @@ export const Cell: FunctionComponent<CellProps> = ({ item, column }): JSX.Elemen
     </div>
   );
 };
+
+export const Cell = memo(CellRaw);

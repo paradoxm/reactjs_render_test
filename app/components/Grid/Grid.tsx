@@ -1,5 +1,6 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, LegacyRef, memo } from 'react';
 
+import { useRenderBlink } from '../../hooks/useRenderBlink/useRenderBlink';
 import { Header } from '../Header/Header';
 import { Item } from '../helpers';
 import { Row } from '../Row/Row';
@@ -9,9 +10,11 @@ export interface GridProps {
   columns: string[];
 }
 
-export const Grid: FunctionComponent<GridProps> = ({ items, columns }): JSX.Element => {
+const GridRaw: FunctionComponent<GridProps> = ({ items, columns }): JSX.Element => {
+  const ref = useRenderBlink('#3b9ae7', 400);
+
   return (
-    <div className="grid">
+    <div ref={ref as LegacyRef<HTMLDivElement>} className="grid">
       <Header columns={columns} />
 
       {items.map((item) => (
@@ -20,3 +23,5 @@ export const Grid: FunctionComponent<GridProps> = ({ items, columns }): JSX.Elem
     </div>
   );
 };
+
+export const Grid = memo(GridRaw);
