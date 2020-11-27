@@ -1,33 +1,31 @@
-import React, { FunctionComponent, LegacyRef, memo } from 'react';
-import isEqual from 'react-fast-compare';
+import React, { FunctionComponent, LegacyRef } from 'react';
 
 import { useRenderBlink } from '../../hooks/useRenderBlink/useRenderBlink';
 import { Header } from '../Header/Header';
 import { Item } from '../helpers';
-import { Row } from '../Row/Row';
+
+export interface RowRendererProps {
+  key: string;
+  item: Item;
+  columns: string[];
+}
 
 export interface GridProps {
   items: Item[];
   columns: string[];
-  onChange?: () => void;
+  rowRenderer?: (props: RowRendererProps) => JSX.Element;
 }
 
-const GridRaw: FunctionComponent<GridProps> = ({
-  items,
-  columns,
-  onChange = () => {},
-}): JSX.Element => {
+const GridRaw: FunctionComponent<GridProps> = ({ items, columns, rowRenderer }): JSX.Element => {
   const ref = useRenderBlink('', 0);
 
   return (
     <div ref={ref as LegacyRef<HTMLDivElement>} className="grid">
       <Header columns={columns} />
 
-      {items.map((item) => (
-        <Row key={item.id} item={item} columns={columns} onChange={onChange} />
-      ))}
+      {items.map((item) => rowRenderer({ key: item.id, item, columns }))}
     </div>
   );
 };
 
-export const Grid = memo(GridRaw, isEqual);
+export const Grid = GridRaw;

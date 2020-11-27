@@ -8,14 +8,9 @@ import { Item } from '../helpers';
 export interface RowProps {
   item: Item;
   columns: string[];
-  onChange?: () => void;
 }
 
-const RowRaw: FunctionComponent<RowProps> = ({
-  item,
-  columns,
-  onChange = () => {},
-}): JSX.Element => {
+const RowRaw: FunctionComponent<RowProps> = ({ item, columns }): JSX.Element => {
   const ref = useRenderBlink('#d99e44', 350);
 
   return (
@@ -27,6 +22,4 @@ const RowRaw: FunctionComponent<RowProps> = ({
   );
 };
 
-export const Row = memo(RowRaw, isEqual);
-
-(Row as any).whyDidYouRender = true;
+export const Row = memo(RowRaw);
