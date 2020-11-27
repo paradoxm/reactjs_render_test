@@ -1,4 +1,5 @@
 import React, { FunctionComponent, LegacyRef, memo } from 'react';
+import isEqual from 'react-fast-compare';
 
 import { useRenderBlink } from '../../hooks/useRenderBlink/useRenderBlink';
 import { Header } from '../Header/Header';
@@ -8,9 +9,14 @@ import { Row } from '../Row/Row';
 export interface GridProps {
   items: Item[];
   columns: string[];
+  onChange: () => void;
 }
 
-const GridRaw: FunctionComponent<GridProps> = ({ items, columns }): JSX.Element => {
+const GridRaw: FunctionComponent<GridProps> = ({
+  items,
+  columns,
+  onChange = () => {},
+}): JSX.Element => {
   const ref = useRenderBlink('#3b9ae7', 400);
 
   return (
@@ -24,4 +30,6 @@ const GridRaw: FunctionComponent<GridProps> = ({ items, columns }): JSX.Element 
   );
 };
 
-export const Grid = memo(GridRaw);
+export const Grid = memo(GridRaw, isEqual);
+
+(Grid as any).whyDidYouRender = true;

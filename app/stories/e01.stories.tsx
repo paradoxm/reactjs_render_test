@@ -9,7 +9,7 @@ export default { title: 'Examples / 01', decorators: [withKnobs] };
 export const Base: React.FunctionComponent = () => {
   const count = number('Row count', 10, { step: 10, min: 0 });
   const columnsCount = number('Columns count', 8, { step: 1, min: 0 });
-  const columns = useMemo(() => generateColumns(columnsCount), [columnsCount]);
+  const columns = generateColumns(columnsCount);
   const items = useMemo(() => getItems(count, columnsCount), [count, columnsCount]);
 
   const [timer, setTimer] = useState(0);
@@ -31,3 +31,5 @@ export const Base: React.FunctionComponent = () => {
     </div>
   );
 };
+
+
